@@ -23,7 +23,8 @@ from models import model
 
 # Shrink the reported context window so summarization triggers at ~595 tokens
 # (85% of 700) instead of the real threshold. Must use model object, not string.
-model.profile = {**model.profile, "max_input_tokens": 700}
+# ChatOpenAI (OpenRouter) has no built-in profile, so build it from scratch.
+model.profile = {**(model.profile or {}), "max_input_tokens": 700}
 
 agent = create_deep_agent(
     model=model,
